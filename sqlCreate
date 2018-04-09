@@ -1,0 +1,11 @@
+CREATE DATABASE databasename;
+
+CREATE TABLE `perros` (
+ `Nombre` text NOT NULL,
+ `Raza` text NOT NULL,
+ `Localidad` text NOT NULL,
+ `NombreDueno` text NOT NULL,
+ `DiaAsistencia` text NOT NULL,
+ `Cedula` int(11) NOT NULL,
+ `Telefono` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
