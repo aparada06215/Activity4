@@ -8,4 +8,7 @@ CREATE TABLE `perros` (
  `DiaAsistencia` text NOT NULL,
  `Cedula` int(11) NOT NULL,
  `Telefono` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
+);
+
+INSERT INTO `perros` (`Nombre`, `Raza`, `Localidad`, `NombreDueno`, `DiaAsistencia`, `Cedula`, `Telefono`) VALUES ('vulcano', 'labrador', 'barrios unidos', 'miguel', '6', '101', '1234');
+
