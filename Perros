@@ -1,0 +1,241 @@
+package Modelo;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+
+import com.mysql.jdbc.PreparedStatement;
+
+
+public class Perros {
+
+	protected Shell shlPerros;
+	private Text Nombre;
+	private Text Raza;
+	private Text Localidad;
+	private Text NombreDueno;
+	private Text DiaAsistencia;
+	private Text Cedula;
+	private Text Telefono;
+
+	/**
+	 * Launch the application.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		try {
+			Perros perro = new Perros();
+			perro.BackMenu(perro);
+//			window.open();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+
+	/**
+	 * Open the window.
+	 * @wbp.parser.entryPoint
+	 */
+	public void open() {
+		Display display = Display.getDefault();
+		createContents();
+		shlPerros.open();
+		shlPerros.layout();
+		while (!shlPerros.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
+		}
+	}
+	
+	public int requestStr(String m){
+    	return  Integer.parseInt( JOptionPane.showInputDialog(m));
+    }
+    
+    
+    public void showStr(String me){
+        JOptionPane.showMessageDialog(null, me);
+    }
+	
+	public int showMenu(){
+        
+		String m="Menu\n";
+		        
+				m=m+"\n1.Crear un perro nuevo \n";
+		        m=m+"2.Mostrar la informacion de los perros\n";
+		        m=m+"3.Mostrar perros por localidad\n";
+		        m=m+"4.Salir\n";
+		        
+		        return requestStr(m+"\nIngrese una opción");
+		    	
+		    }
+	
+	public void BackMenu(Perros p){
+        int op;
+        do{
+            
+          op=showMenu();
+          executeMenu(op, p);
+        }while(op!=5);
+    }
+	public void executeMenu(int op, Perros p){
+        switch(op){
+            case 1:
+            	try{
+            		p.open();
+            	}
+            	catch(Exception e){
+            		e.printStackTrace();
+            	}
+            	break;
+            case 2:
+            	try{
+            		ShowAll showa = new ShowAll();
+            	}            	
+            	catch(Exception e){
+            		e.printStackTrace();
+            	}
+            	break;
+//            case 3: io.showStr(Integer.toString(liftSupoort()));break;
+//            case 4: moveLift(io.requestStr("¿A que piso quiere ir?"));break;
+//            case 5: System.exit(0);
+    }
+    
+    
+ }   
+	
+private void SelectAll(){
+    	
+    	try{
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/perros", "root", "");
+			Statement dbst = conn.createStatement();
+			ResultSet dbrs = dbst.executeQuery("select * from perros");
+			
+			ShowAll tablep = new ShowAll();
+			int li_row = 0;
+			while(dbrs.next()){
+//			    tablep.setValueAt(dbrs.getString("Nombre"),li_row,0);
+//			    tablep.setValueAt(dbrs.getString("Raza"),li_row,1);
+//			    int userid = dbrs.getInt("userid");
+//			    String username = dbrs.getString("username");
+//			    String name1     = dbrs.getString("name");
+//			    System.out.println(name1);
+			    li_row++;
+
+			}
+//			while(dbrs.next()){
+//				System.out.println(dbrs.getString("cedula")+", " + dbrs.getString("nombre"));			
+//				}
+//			dbst.close();
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+    }
+
+	/**
+	 * Create contents of the window.
+	 */
+	protected void createContents() {
+		shlPerros = new Shell();
+		shlPerros.setSize(370, 367);
+		shlPerros.setText("Perros");
+		
+		Label lblNombre = new Label(shlPerros, SWT.NONE);
+		lblNombre.setBounds(10, 10, 55, 15);
+		lblNombre.setText("Nombre");
+		
+		Label lblRaza = new Label(shlPerros, SWT.NONE);
+		lblRaza.setBounds(10, 54, 55, 15);
+		lblRaza.setText("Raza");
+		
+		Label lblLocallidad = new Label(shlPerros, SWT.NONE);
+		lblLocallidad.setBounds(10, 93, 55, 15);
+		lblLocallidad.setText("Locallidad");
+		
+		Label lblNombreDueo = new Label(shlPerros, SWT.NONE);
+		lblNombreDueo.setBounds(10, 133, 98, 15);
+		lblNombreDueo.setText("Nombre Due\u00F1o");
+		
+		Label lblDaAsistencia = new Label(shlPerros, SWT.NONE);
+		lblDaAsistencia.setBounds(10, 173, 86, 15);
+		lblDaAsistencia.setText("D\u00EDa Asistencia");
+		
+		Label lblCdula = new Label(shlPerros, SWT.NONE);
+		lblCdula.setBounds(10, 213, 55, 15);
+		lblCdula.setText("C\u00E9dula");
+		
+		Label lblTelefono = new Label(shlPerros, SWT.NONE);
+		lblTelefono.setBounds(10, 253, 55, 15);
+		lblTelefono.setText("Telefono");
+		
+		Nombre = new Text(shlPerros, SWT.BORDER);
+		Nombre.setBounds(114, 10, 207, 21);
+		
+		Raza = new Text(shlPerros, SWT.BORDER);
+		Raza.setBounds(114, 50, 207, 21);
+		
+		Localidad = new Text(shlPerros, SWT.BORDER);
+		Localidad.setBounds(114, 90, 207, 21);
+		
+		NombreDueno = new Text(shlPerros, SWT.BORDER);
+		NombreDueno.setBounds(114, 130, 207, 21);
+		
+		DiaAsistencia = new Text(shlPerros, SWT.BORDER);
+		DiaAsistencia.setBounds(114, 170, 207, 21);
+		
+		Cedula = new Text(shlPerros, SWT.BORDER);
+		Cedula.setBounds(114, 210, 207, 21);
+		
+		Telefono = new Text(shlPerros, SWT.BORDER);
+		Telefono.setBounds(114, 250, 207, 21);
+		
+		Button btnCrear = new Button(shlPerros, SWT.NONE);
+		btnCrear.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				Nombre.getText();
+				try{
+					Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/perros", "root", "");
+					java.sql.PreparedStatement ps = conn.prepareStatement("INSERT INTO perros (Nombre, Raza, Localidad, NombreDueno, DiaAsistencia, Cedula, Telefono) VALUES ('"+Nombre.getText()+"', '"+Raza.getText()+"', '"+Localidad.getText()+"', '"+NombreDueno.getText()+"', '"+DiaAsistencia.getText()+"', '"+Cedula.getText()+"', '"+Telefono.getText()+"');");
+					ps.executeUpdate();
+					ps.close();
+					showStr("Nuevo perro agregado con exito!");
+					shlPerros.close();
+				}
+				catch(Exception ex){
+					ex.printStackTrace();
+				}
+			}
+		});
+		btnCrear.setBounds(80, 293, 75, 25);
+		btnCrear.setText("Crear");
+		
+		Button btnCancelar = new Button(shlPerros, SWT.NONE);
+		btnCancelar.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shlPerros.close();
+			}
+		});
+		btnCancelar.setBounds(190, 293, 75, 25);
+		btnCancelar.setText("Cancelar");
+
+	}
+}
